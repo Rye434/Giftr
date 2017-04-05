@@ -6,9 +6,10 @@
 
  if(localStorage.getItem("giftr-grif0193")){
    var people = JSON.parse(localStorage.getItem("giftr-grif0193"));
-} 
+}
  else {
-   var people = {"people":[]}; 
+    var people = {"people":[]};
+    localStorage.setItem("giftr-grif0193", JSON.stringify(people));
 }
  let currentPerson = 0;
  let page = "birthdays";
@@ -127,10 +128,8 @@ var app = {
                 currentPerson = 0;
             }
         }    
-            app.showList();
-            
-            
         }
+    app.showList();
     app.toggleModal();
     },
     showList: function(){
@@ -141,10 +140,10 @@ var app = {
         let list = document.getElementById("contact-list")
         list.innerHTML = "";
             
-        function sortPeople(apples, oranges) {
-                if (apples.dob.substring(5) < oranges.dob.substring(5)) return -1;
-                if (apples.dob.substring(5) > oranges.dob.substring(5)) return 1;
-                return 0;
+        function sortPeople(a, b) {
+                if (a.dob.substring(5) < b.dob.substring(5)){ return -1}
+                else if (a.dob.substring(5) > b.dob.substring(5)){ return 1}
+                else {return 0}
             }
         
         rPerson.sort(sortPeople);
@@ -316,6 +315,7 @@ var app = {
         console.log(currentPerson)
     },
     toggleModal: function(ev){
+        console.log("toggle");
         let myEvent = new CustomEvent("touchend", { bubbles: true, cancelable: true })
         document.querySelector(".icon-close").dispatchEvent(myEvent);
     },
